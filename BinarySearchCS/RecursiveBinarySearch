@@ -23,26 +23,36 @@ namespace BinarySearch
         {
             int[] numbers = new int[10] { 1, 7, 25, 31, 42, 56, 61, 78, 83, 94 };
             int key;
-            
-            Console.WriteLine("Array elements:");
+            string inputValue = "";
+
+            Console.Write("\nArray elements: { ");
             for (int i = 0; i < numbers.Length; i++){
-                Console.Write("Number: {0}", numbers[i]);
+                Console.Write("{0} ", numbers[i]);
             }
+            Console.Write("}\n\n");
 
-            Console.Write("\nEnter a number to search: ");
+            Console.Write("Enter a number to search (type 'q' to quit): ");
+            inputValue = Console.ReadLine();
 
-            while (!int.TryParse(Console.ReadLine(), out key))
+            while (!inputValue.Trim().ToLower().Equals("q"))
             {
-                Console.Write("Please enter a valid number: ");
+                while (!int.TryParse(inputValue, out key))
+                {   
+                    Console.Write("Please enter a valid number: ");
+                    inputValue = Console.ReadLine();
+                }
+
+                int result = BinarySearch(numbers, key, 0, numbers.Length);
+
+                if( result == -1 ){
+                    Console.WriteLine("Number not found.");
+                } else {
+                    Console.WriteLine("The number {0} is on index {1}", key, result);
+                }
+
+                Console.Write("\nEnter a number to search (type 'q' to quit): ");
+                inputValue = Console.ReadLine();
             }
-
-            int result = BinarySearch(numbers, key, 0, numbers.Length);
-
-            if( result == -1 ){
-                Console.WriteLine("Number not found.");
-            } else {
-                Console.WriteLine("The number {0} is on index {1}", key, result);
-            }             
         }
     }
 }
